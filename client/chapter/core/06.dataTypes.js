@@ -13,7 +13,7 @@ let undef;
 console.log(typeof undef);
 
 // 3. 따옴표를 사용해 묶은 텍스트(큰", 작은', 역`)
-const double = 'Hello'; //String literal
+const double = "Hello"; //String literal
 const single = 'Hello';
 const backtick = `Hello ${10 + 5}`;
 console.log(typeof backtick);
