@@ -77,7 +77,6 @@ console.assert(rem('30px',10) === '3rem');
 
 
 // css(node: string, prop: string, value: number|strung) : string;
-let css;
 
 
 
@@ -103,20 +102,37 @@ function setStyle(node, prop, value) {
 
 
 
-// setStyle('.first', 'color', 'blue');
+setStyle('.first', 'color', 'blue');
+
+
+
+
+function getStyle(node, prop) {
+  if(typeof node === 'string') node = document.querySelector(node);
+  if(typeof prop !== 'string') throw new Error('getStyle 함수의 두 번째 인수는 문자 타입이어야 합니다.');
+
+  return getComputedStyle(node)[prop];
+}
+
+const h1FontSize = getStyle('.first', 'fontsize'); //32px
 
 
 
 
 
+function css(node, prop, value) {
+  // if(!value) {
+  //   //getter
+  //   return getStyle(node, prop);
 
-
-
-
-
-
-
-
+  // }
+  // else {
+  //   //setter
+  //   setStyle(node,prop,value);
+  // }
+  
+  return (!value) ? getStyle(node,prop) : setStyle(node,prop,value);
+}
 
 
 
