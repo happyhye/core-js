@@ -70,27 +70,52 @@ function checkBrowser(){
 checkBrowser() // chrome
 
 
-let lastIndexOf;
-let includes;
-let startsWith;
-let endsWith;
+let lastIndexOf = message.lastIndexOf('s');
+let includes = message.includes('Less'); //true
+let startsWith = message.startsWith('less'); //false
+let endsWith = message.endsWith('more.');
 
 
+
+let str = '    a    b     c                d'
 // 공백 잘라내기
-let trimLeft;
-let trimRight;
-let trim;
+let trimStart = str.trimStart();
+console.log(trimStart);
+
+let trimEnd = str.trimEnd();
+console.log(trimEnd);
+let trim = str.trim();
+
+const replaceAll = str.replaceAll(' ','')
+
+const replace = str.replace(/\s*/g,'')
+console.log(replace);
+
+
+
+const trimText = (text) => text.replaceAll(' ','');
+
+trimText(str); //abcd
+
 
 
 // 텍스트 반복
-let repeat;
+let repeat = message.repeat(3);
 
 
 // 대소문자 변환
-let toLowerCase;
-let toUpperCase;
+let toLowerCase = message.toLowerCase(); //소문자
+let toUpperCase = message.toUpperCase(); //대문자
 
+
+console.clear()
 
 // 텍스트 이름 변환 유틸리티 함수
-let toCamelCase;
-let toPascalCase;
+function toCamelCase(string) {
+  return string.replace(/(\s|-|_)+./g, ($1) => $1.trim().replace(/(-|_)+/, '').toUpperCase())
+}
+
+function toPascalCase(string) {
+  let name = toCamelCase(string);
+  return name[0].toUpperCase() + name.slice(1);
+}
