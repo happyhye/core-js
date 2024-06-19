@@ -26,7 +26,12 @@ function setAttr (node,prop,value){
     return;
   }
 
-  // prop에 data가 있어? 그럼 dataset으로 넣기 
+  // prop에 data가 있어? 그럼 dataset으로 넣기
+  if(prop.startWith('data')) {
+    prop = prop.slice(5) // prop을 잘라서(data-) 다시 prop에 넣기
+    node.dataset[prop] = value //대괄호표기법으로 넣고 종료
+    return;
+  }
 
 
   if(!value) throw new ReferenceError('setAttr 함수의 세 번째 인수는 필수 입력값 입니다.');
