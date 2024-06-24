@@ -38,7 +38,7 @@ const section = document.querySelector('#visual-section');
 
 // 2. class가 list인 ul 태그 요소
 const list = section.querySelector('.list');
-
+console.log(list);
 
 
 // 3. list 요소 안에 about 텍스트를 가진 li 태그 요소
