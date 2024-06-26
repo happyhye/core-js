@@ -81,11 +81,11 @@ xhr.post = (url,body,성공,실패) =>{
    })
 }
 
-xhr.post(
-  ENDPOINT, 
-  user,
-  (data)=>{console.log(data);}, 
-  (err)=>{console.log(err);}) //사용자입장
+// xhr.post(
+//   ENDPOINT, 
+//   user,
+//   (data)=>{console.log(data);}, 
+//   (err)=>{console.log(err);}) //사용자입장
 
 
 xhr.put = (url,body,성공,실패) =>{
@@ -110,8 +110,62 @@ xhr.delete = (url,성공,실패) =>{
 
 
 
-// xhr의 프라미스 방식
+// xhr의 프라미스 방식----------------------------------------------
 // xhr
 // .post(ENDPOINT)
 // .then()
 // .then()
+
+const defaultOptions = {
+  method:'GET',
+  url: '',
+  body: null,
+  errorMessage:'서버와의 통신이 원활하지 않습니다.',
+  headers:{
+    'Content-Type':'application/json',
+    'Access-Control-Allow-Origin': '*'
+  }
+}
+
+
+export function xhrPromise(options){
+
+  const {method,url,body,headers,errorMessage} = {
+    ...defaultOptions,
+    ...options,
+    headers:{
+      ...defaultOptions.headers,
+      ...options.headers
+    }
+  }
+
+  const xhr = new XMLHttpRequest();
+
+  xhr.open(method,url);
+
+  Object.entries(headers).forEach(([key,value])=>{
+    xhr.setRequestHeader(key,value);
+  })
+
+  xhr.send(JSON.stringify(body));
+
+  return new Promise((resolve, reject) => {
+    
+    xhr.addEventListener('readystatechange',()=>{
+      if(xhr.readyState === 4){
+        if(xhr.status >= 200 && xhr.status < 400){
+          resolve(JSON.parse(xhr.response));
+        }
+        else{
+          reject({message:errorMessage});
+        }
+      }
+    })
+  })
+}
+
+// 한줄버전
+xhrPromise.get = (url) => xhrPromise({ url })
+xhrPromise.post = (url,body) => xhrPromise({ url, body, method:'POST' })
+xhrPromise.put = (url,body) => xhrPromise({ url, body, method:'PUT' })
+xhrPromise.delete = url => xhrPromise({ url, method:'DELETE' })
