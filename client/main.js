@@ -1,24 +1,45 @@
-class MyElement extends HTMLElement {
-
+class Buttn extends HTMLElement {
   constructor(){
-    super(); //부모의 능력을 내가 다 상속받겠다.
+    super();
+
+
+    this.button = document.querySelector('button');
   }
 
   connectedCallback(){
-    console.log('탄생함');
+    this._render();
   }
 
-  disconnectedCallback(){
-    console.log('죽음');
+  disconnectedCallback() {
+
   }
+
+  static get observedAttributes() { //(3)
+    return ['id'];   //id를 계속 감시해
+  }
+
+
+  attributeChangedCallback(name, oldValue, newValue) { // (4)
+    console.log( name, oldValue, newValue );
+
+    if(oldValue !== newValue) {
+      this._render()
+    }
+  }
+
+  _render(){
+    this.button.textContent = this.id
+  }
+
 }
 
-// 사용할 태그이름 정의,  클래스 연결
-customElements.define('c-element', MyElement)
+customElements.define('c-button', Buttn)
 
-// 태그 생성
-const elem = document.createElement('c-element');
-const app = document.getElementById('app');
-console.log(elem);
-// 추가
-app.appendChild(elem)
+
+// 외부에 의해 속성을 강제로 바꿈
+const c = document.querySelector('c-button')
+let count = 0;
+
+c.addEventListener('click', ()=>{
+  c.setAttribute('id',  ++count)
+})
