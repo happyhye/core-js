@@ -2,17 +2,19 @@ import globals from "globals";
 import pluginJs from "@eslint/js";
 
 
+
 export default [
   pluginJs.configs.recommended,
   {
     languageOptions: { 
       globals: {
         ...globals.browser, 
-        ...globals.node
+        ...globals.node,
       } 
     },
-    rules: {
-      "no-unused-vars": 'warn'
+    
+    rules:{
+      "no-unused-vars":'warn'
     },
   },
 ];
