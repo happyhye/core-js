@@ -1,25 +1,17 @@
-class UserCard extends HTMLElement{
-  constructor(){
-    super();
-    this.attachShadow({mode:'open'});
-    this.shadowRoot.innerHTML = /* html */ `
-      <button type="button">btn</button>
-    `
+import { TodoList } from "./components/TodoList/TodoList.js";
+import { TodoItem } from "./components/TodoItem/TodoItem.js";
 
-    this.button = this.shadowRoot.querySelector('button')
-  }
+// app 잡고
+const app = document.getElementById('app')
 
-  connectedCallback() {
-    console.log(this);  //user-card 객체
-
-    this.button.addEventListener('click', this.clickMe.bind(this) )
-  }
-
-  clickMe(){
-    console.log('THX!');
-    console.log(this);
-  }
+// define 정의
+const defineElements = ()=>{
+  customElements.define('todo-app', TodoList);
+  customElements.define('todo-item', TodoItem);
 }
 
+defineElements()
 
-customElements.define('user-card',UserCard);
+// todo-app 태그 생성
+const todoElement = document.createElement('todo-app')
+app.append(todoElement);
